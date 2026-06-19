@@ -1,0 +1,289 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>漂亮的名片</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+/* 電子名片樣式：已全面進化為金色系 */
+:root{
+  --bg0: rgba(239,228,176,.12);
+  --bg1: rgba(247,240,213,.25);
+  --paper: rgba(255,255,255,.08);
+  --paper2: rgba(255,255,255,.12);
+  --ink: rgba(255,255,255,.92);
+  --muted: rgba(164,133,89,.85); /* 調整項目標籤為優雅沙金 */
+  --line: rgba(255,255,255,.14);
+  --accent: #D4AF37;   /* 改為標準黃金 */
+  --accent2: #AA7C11;  /* 改為深亮金 */
+  --radius: 22px;
+  --shadow: 0 24px 60px rgba(0,0,0,.45);
+}
+
+/* 預覽頁面本身的背景（將粉紅漸層改為淡淡的香檳金與象牙色漸層） */
+body{
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding: 28px 18px;
+  color: var(--ink);
+  font-family: "Noto Sans TC", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background:
+    radial-gradient(900px 600px at 18% 10%, rgba(212,175,55,.15), transparent 55%),
+    radial-gradient(900px 600px at 86% 28%, rgba(170,124,17,.12), transparent 55%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+}
+
+.card{
+  width: min(720px, 100%);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--paper), rgba(255,255,255,.06));
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  position: relative;
+}
+
+/* 卡片上緣反光調整為香檳金氛圍 */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(600px 220px at 20% 0%, rgba(212,175,55,.15), transparent 55%),
+    radial-gradient(520px 240px at 80% 0%, rgba(170,124,17,.12), transparent 55%);
+  pointer-events:none;
+}
+
+.card__top{
+  position: relative;
+  display:grid;
+  grid-template-columns: 92px 1fr;
+  gap: 16px;
+  padding: 22px 22px 14px;
+  align-items:center;
+}
+
+.avatar{
+  width: 92px;
+  height: 92px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border: 1px solid rgba(255,255,255,.14);
+  display:grid;
+  place-items:center;
+  backdrop-filter: blur(10px);
+}
+
+.who__role{
+  margin:0 0 6px;
+  font-size: 14px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* 標題名字改為沉穩、有質感的古銅暗金 */
+.who__name{
+  margin:0;
+  font-family: "Fraunces", serif;
+  font-size: clamp(22px, 3.8vw, 34px);
+  line-height: 1.08;
+  letter-spacing: .2px;
+  color: #9A7B4F;
+}
+.who__name span{
+  font-weight: 500;
+  opacity: .85;
+}
+
+.who__tag{
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: .2px;
+}
+
+.card__body{
+  position: relative;
+  padding: 14px 22px 18px;
+  display:grid;
+  gap: 10px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns: 92px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.k{
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #9A7B4F; /* 聯絡項目名稱改為古銅金 */
+}
+.v{
+  color: rgba(14,16,34,.92);
+  text-decoration: none;
+  font-weight: 700;
+}
+.v:hover{
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.card__cta{
+  position: relative;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 22px 22px;
+}
+
+.cta{
+  appearance:none;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color: rgba(14,16,34,.92);
+  padding: 12px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  cursor:pointer;
+  transition: transform .18s cubic-bezier(.2,.9,.2,1), background .18s cubic-bezier(.2,.9,.2,1);
+}
+.cta:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
+.cta:active{ transform: translateY(0) scale(.98); }
+
+/* 主要行動按鈕：換上璀璨黃金漸層 */
+.cta--primary{
+  border-color: rgba(212,175,55,.4);
+  background: linear-gradient(180deg, #D4AF37, #B89742);
+  color: #FFFFFF; /* 確保白字在金底上清晰 */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.cta--primary:hover{
+  background: linear-gradient(180deg, #E5C158, #D4AF37);
+}
+
+@media (max-width: 520px){
+  .card__top{ grid-template-columns: 1fr; }
+  .avatar{ width: 88px; height: 88px; border-radius: 50%; }
+  .row{ grid-template-columns: 1fr; }
+  .k{ opacity: .85; }
+}
+</style>
+</head>
+<body>
+
+<main class="card" role="main">
+  <header class="card__top">
+    <div class="avatar" aria-hidden="true" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBKVWWVDGqGSEQ_ZLhTbQzNuZ9POCmqiLgnrY_yVDj9CHx6fmQb71EyDrcPgjFt561cQTW9WjLDflvPiIWjpZ_ctr6EuZ_4YFPTuCmmEzA6o_oLwPfXJDVXemM6Z6O1LZmp_eHZAan4ny3hg7dm8-KE9npyxjdMb8iXaK6MCOsjo7dIQ/s220/%E7%9F%A5%E8%B6%B3_.png'); background-size: cover; background-position: center; width: 84px; height: 84px; border-radius: 50%;">
+    </div>
+
+    <div class="who">
+      <p class="who__role">Selftaught frontend design</p>
+      <h1 class="who__name">大風起兮雲飛揚</h1>
+      <p class="who__tag">把好看的介面，做成可維護的程式</p>
+    </div>
+  </header>
+
+  <section class="card__body" aria-label="聯絡資訊">
+    <div class="row">
+      <span class="k">Email</span>
+      <a class="v" href="mailto:atbesto@gmail.com">atbesto@gmail.com</a>
+    </div>
+    <div class="row">
+      <span class="k">Phone</span>
+      <a class="v" href="tel:+886900000000">撥打電話 0900 000 000</a>
+    </div>
+    <div class="row">
+      <span class="k">Website</span>
+      <a class="v" href="https://homeian.blogspot.com/p/md2htl.html" target="_blank">怎麼發電子名片</a>
+    </div>
+    <div class="row">
+      <span class="k">LinkedIn</span>
+      <a class="v" href="https://www.linkedin.com/in/海-大-1721b3416" target="_blank">我的LinkedIn(請換成自己的)</a>
+    </div>
+  </section>
+  
+<script>
+function downloadVCard() {
+  const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:大;風起;;;
+FN:大風起
+ORG:www.linkedin.com/in/海-大-1721b3416
+EMAIL;TYPE=INTERNET:atbesto@gmail.com
+TEL;TYPE=CELL:+886900000000
+URL:https://homeian.blogspot.com
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/海-大-1721b3416
+END:VCARD`;
+
+  const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = '大風_聯絡人.vcf';
+  link.click();
+}
+</script>
+
+<footer class="card__cta" aria-label="行動按鈕">
+  <button class="cta cta--primary" type="button" onclick="downloadVCard()">儲存聯絡人</button>
+  <button class="cta cta--primary" type="button" onclick="Share()">分享名片</button>
+  <button class="cta" type="button" onclick="toggleText()">改一句話</button>
+</footer>
+
+<script>
+async function Share() {
+  const shareData = {
+    title: '大海風 Ziqing Lin | 電子名片',
+    text: '這是我的電子名片，內有我的聯絡資訊與作品集，歡迎保持聯絡！',
+    url: window.location.href
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      console.log('名片分享成功！');
+    } catch (err) {
+      console.log('使用者取消分享或發生錯誤:', err);
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      alert('已複製名片網址至剪貼簿，您可以直接貼上分享給好友！');
+    } catch (err) {
+      alert('複製失敗，請手動複製瀏覽器網址列。');
+    }
+  }
+}
+</script>
+
+<script>
+function toggleText() {
+  const tagElement = document.querySelector('.who__tag');
+  const txt1 = "心存好念 口說好話 與人為善";
+  const txt2 = "如果你要說別人的壞話 又要別人聽你的 那你就是天下最大的笨蛋 -- 蘇秦";
+  
+  if (tagElement.textContent === txt1) {
+    tagElement.textContent = txt2;
+  } else {
+    tagElement.textContent = txt1;
+  }
+}
+</script>
+</main>
+</body>
+</html>
